@@ -50,3 +50,5 @@ movies = pd.read_csv(f'{DATA_DIR}/movies.dat', sep='::', engine='python',
 
 print(f"ratings: {ratings.shape}, users: {users.shape}, movies: {movies.shape}")
 ratings.head()
+users.head()
+movies.head()
