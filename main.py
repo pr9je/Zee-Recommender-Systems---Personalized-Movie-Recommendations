@@ -26,3 +26,15 @@ from surprise import accuracy
 RANDOM_STATE = 42
 np.random.seed(RANDOM_STATE)
 pd.set_option('display.max_columns', 50)
+
+DATA_DIR = 'data'
+FILES = ['ratings.dat', 'users.dat', 'movies.dat']
+SOURCE = 'https://raw.githubusercontent.com/vandit15/Movielens-Data/master/ml-1m/{}'
+
+os.makedirs(DATA_DIR, exist_ok=True)
+for fname in FILES:
+  fpath = os.path.join(DATA_DIR, fname)
+  if not os.path.exists(fpath):
+    print(f'Downloading {fname}...')
+    urllib.request.urlretrieve(SOURCE.format(fname), fpath)
+print("Data files ready:", os.listdir(DATA_DIR))
