@@ -52,3 +52,8 @@ print(f"ratings: {ratings.shape}, users: {users.shape}, movies: {movies.shape}")
 ratings.head()
 users.head()
 movies.head()
+
+# Merge into a single workging dataframe: one row per (user, moive) rating, enriched with user demographics and moive metadata.
+df = ratings.merge(users, on='UserID').merge(movies, on='MovieID')
+print("Merged dataframe shape: ", df.shape)
+df.head()
