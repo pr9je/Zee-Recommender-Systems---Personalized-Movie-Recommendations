@@ -38,3 +38,15 @@ for fname in FILES:
     print(f'Downloading {fname}...')
     urllib.request.urlretrieve(SOURCE.format(fname), fpath)
 print("Data files ready:", os.listdir(DATA_DIR))
+
+
+# Data Loading and Merging
+ratings = pd.read_csv(f'{DATA_DIR}/ratings.dat', sep='::', engine='python',
+                       names=['UserID', 'MovieID', 'Rating', 'Timestamp'], encoding='ISO-8859-1')
+users = pd.read_csv(f'{DATA_DIR}/users.dat', sep='::', engine='python',
+                     names=['UserID', 'Gender', 'Age', 'Occupation', 'Zip-code'], encoding='ISO-8859-1')
+movies = pd.read_csv(f'{DATA_DIR}/movies.dat', sep='::', engine='python',
+                      names=['MovieID', 'Title', 'Genres'], encoding='ISO-8859-1')
+
+print(f"ratings: {ratings.shape}, users: {users.shape}, movies: {movies.shape}")
+ratings.head()
