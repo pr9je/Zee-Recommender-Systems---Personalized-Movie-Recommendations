@@ -64,4 +64,6 @@ df.info()
 
 df.describe(include='all').T
 
-
+# Missing values
+print("Missing values per column:")
+print(df.isna().sum())
