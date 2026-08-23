@@ -82,3 +82,15 @@ print(f"Timestamps all positive: {(ts > 0).all()}  |  range: {pd.to_datetime(ts.
 # Missing values
 print("Missing values per column:")
 print(df.isna().sum())
+
+# Scale & Sparsity
+n_users, n_movies, n_ratings = df['UserID'].nunique(), df['MovieID'].nunique(), len(df)
+
+print(f"Unique Users: {n_users}")
+print(f'Unique Movies: {n_movies} note: fewer than the 3,883 in movies.dat - not every catalog title has been rated')
+print(f'Total ratings: {n_ratings}')
+print(f'Ratings per user -> min: {df.groupby('UserID').size().min()}, mean: {df.groupby('UserID').size().mean():.1f}, max: {df.groupby("UserID").size().max()}')
+print(f'Ratings per movie -> min: {df.groupby('MovieID').size().min()}, mean: {df.groupby('MovieID').size().mean():.1f}, max: {df.groupby('MovieID').size().max()}')
+
+sparsity = 1 - n_ratings / (n_users * n_movies)
+print(f'\nUser-item matrix sparsity: {sparsity:.2%} of all possible (user, movie) paris are unrated')
