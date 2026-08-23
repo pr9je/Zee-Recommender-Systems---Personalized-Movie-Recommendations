@@ -64,6 +64,21 @@ df.info()
 
 df.describe(include='all').T
 
+# Data consistency checks
+valid_ages = {1, 18, 25, 35, 45, 50, 56}
+
+print("Fully duplicated rows:", df.duplicated().sum())
+print("Duplicated (UserID, MovieID) pairs: ", df.duplicated(subset=['UserID', 'MovieID']).sum(), "<- same user rating the same movie twice, would need de-duping if > 0")
+print("Rating values present: ", sorted(df['Rating'].unique().tolist()), "-> all within 1-5:", df['Rating'].between(1,5).all())
+print("Age codes present: ", sorted(df['Age'].unique().tolist()),"-> all within documented set:", set(df['Age'].unique().tolist()).issubset(valid_ages))
+print("Occupation codes present: ", sorted(df['Occupation'].unique().tolist()), "-> all within 0-20:", df['Occupation'].between(0, 20).all())
+print("Gender values present:", sorted(df['Gender'].unique().tolist()))
+
+bad_titles = movies.loc[movies['Title'].str.extract(r'\((\d{4})\)$')[0].isna(), 'Title'].tolist()
+print(f"Titles that don't match 'Title (YYYY)':", len(bad_titles), bad_titles)
+
+ts = df['Timestamp']
+print(f"Timestamps all positive: {(ts > 0).all()}  |  range: {pd.to_datetime(ts.min(), unit='s').date()} to {pd.to_datetime(ts.max(), unit='s').date()}")
 # Missing values
 print("Missing values per column:")
 print(df.isna().sum())
