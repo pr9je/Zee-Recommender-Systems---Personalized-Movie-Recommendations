@@ -61,3 +61,7 @@ df.head()
 # EDA
 # Shape, structure & datatypes
 df.info()
+
+df.describe(include='all').T
+
+
