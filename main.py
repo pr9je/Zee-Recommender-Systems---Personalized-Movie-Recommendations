@@ -124,3 +124,23 @@ fig.update_layout(
 
 pio.renderers.default = 'colab'
 fig.show()
+
+import plotly.express as px
+
+ratings_per_user = df.groupby('UserID').size().reset_index(name='NumRatings')
+
+fig = px.histogram(
+    ratings_per_user,
+    x='NumRatings',
+    nbins=50,
+    title='Ratings Given per User',
+    color_discrete_sequence=['#DD8452']
+)
+
+fig.update_layout(
+    xaxis_title='# Ratings',
+    yaxis_title='# Users',
+    bargap=0.05
+)
+
+fig.show(renderer='colab')
