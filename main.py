@@ -57,3 +57,7 @@ movies.head()
 df = ratings.merge(users, on='UserID').merge(movies, on='MovieID')
 print("Merged dataframe shape: ", df.shape)
 df.head()
+
+# EDA
+# Shape, structure & datatypes
+df.info()
