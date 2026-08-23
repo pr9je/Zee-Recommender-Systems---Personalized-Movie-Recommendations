@@ -94,3 +94,33 @@ print(f'Ratings per movie -> min: {df.groupby('MovieID').size().min()}, mean: {d
 
 sparsity = 1 - n_ratings / (n_users * n_movies)
 print(f'\nUser-item matrix sparsity: {sparsity:.2%} of all possible (user, movie) paris are unrated')
+
+# Rating distribution & User activity.
+import plotly.express as px
+import plotly.io as pio
+
+rating_counts = df['Rating'].value_counts().sort_index().reset_index()
+rating_counts.columns = ['Rating', 'Count']
+
+fig = px.bar(
+    rating_counts,
+    x='Rating',
+    y='Count',
+    text='Count',
+    title='Distribution of Movie Ratings',
+    color_discrete_sequence=['#4C72B0']
+)
+
+fig.update_traces(
+    texttemplate='%{text:,}',
+    textposition='outside'
+)
+
+fig.update_layout(
+    xaxis=dict(dtick=1),
+    yaxis_title='Count',
+    bargap=0.3
+)
+
+pio.renderers.default = 'colab'
+fig.show()
