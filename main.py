@@ -194,3 +194,13 @@ fig.update_traces(
 )
 
 fig.show(renderer='colab')
+
+occ_counts = df['OccupationaLabel'].value_counts().sort_values().reset_index()
+occ_counts.columns = ['Occupation', 'Count']
+
+fig = px.bar(occ_counts, x='Occupation', y='Count', text='Count',
+             title='Rating by Occupation', color_discrete_sequence=['#C44E52'])
+fig.update_traces(
+    texttemplate='%{text:,}',
+    textposition='outside')
+fig.show(renderer='colab')
