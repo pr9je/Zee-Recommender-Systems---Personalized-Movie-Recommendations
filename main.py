@@ -204,3 +204,6 @@ fig.update_traces(
     texttemplate='%{text:,}',
     textposition='outside')
 fig.show(renderer='colab')
+
+gender_by_user = users['Gender'].value_counts()
+print("Unique users by gender:\n", gender_by_user, f'\n\n% male (unique users): {(users['Gender'] == 'M').mean():.1%}')
