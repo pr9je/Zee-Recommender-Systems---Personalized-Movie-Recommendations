@@ -207,3 +207,16 @@ fig.show(renderer='colab')
 
 gender_by_user = users['Gender'].value_counts()
 print("Unique users by gender:\n", gender_by_user, f'\n\n% male (unique users): {(users['Gender'] == 'M').mean():.1%}')
+
+# Catalog breadkdown: release decade & genre
+movies['ReleaseYear'] = movies['Title'].str.extract(r'\((\d{4})\)$').astype(float)
+movies['ReleaseDecade'] = (movies['ReleaseYear'] // 10 * 10).astype('Int64')
+
+decade_counts = movies['ReleaseDecade'].value_counts().sort_index().reset_index()
+decade_counts.columns = ['ReleaseDecade', 'Count']
+decade_counts['ReleaseDecade'] = decade_counts['ReleaseDecade'].astype(str)
+
+fig = px.bar(decade_counts, x='ReleaseDecade', y='Count', text='Count',
+             title='Movies in catalog by release decade', color_discrete_sequence=['#8172B2'])
+fig.update_traces(texttemplate='%{text:,}', textposition='outside')
+fig.show(renderer='colab')
