@@ -232,3 +232,10 @@ fig.show(renderer='colab')
 
 print("Movies by decade (catalog, unique titles):")
 print(movies['ReleaseDecade'].value_counts().sort_index())
+
+# Grouping movies by average rating and number of ratings.
+
+movie_group = df.groupby('Title').agg(AvgRating=('Rating', 'mean'), NumRatings=('Rating', 'count')).reset_index()
+
+print("Top 10 movies by NUMBER of Ratings (most-watched):")
+movie_group.sort_values('NumRatings', ascending=False).head(10).reset_index(drop=True).round(2)
