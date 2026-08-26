@@ -242,3 +242,7 @@ movie_group.sort_values('NumRatings', ascending=False).head(10).reset_index(drop
 
 print("Top 10 movies by AVERAGE rating, with NO minimum-ratings floow-note how few ratings back most of these up: ")
 movie_group.sort_values('AvgRating', ascending=False).head(10).reset_index(drop=True).round(2)
+
+MIN_RATINGS = 100
+print(f'Top 10 movies by AVERAGE rating, requiring >= {MIN_RATINGS} ratings (far more trustworthy):')
+movie_group[movie_group['NumRatings'] >= MIN_RATINGS].sort_values('AvgRating', ascending=False).head(10).reset_index(drop=True).round(2)
