@@ -220,3 +220,15 @@ fig = px.bar(decade_counts, x='ReleaseDecade', y='Count', text='Count',
              title='Movies in catalog by release decade', color_discrete_sequence=['#8172B2'])
 fig.update_traces(texttemplate='%{text:,}', textposition='outside')
 fig.show(renderer='colab')
+
+genre_counts = df.assign(Genres=df['Genres'].str.split('|')).explode('Genres')['Genres'].value_counts().sort_values().reset_index()
+
+genre_counts.columns = ['Genre', 'Count']
+
+fig = px.bar(genre_counts, x='Count', y='Genre', text='Count' ,title='Rating volumne by genre (movies have multiple genres)', color_discrete_sequence=['#937860'])
+fig.update_traces(texttemplate='%{text:,}', textposition='outside')
+fig.update_layout(xaxis_title='Count', yaxis_title='Genre')
+fig.show(renderer='colab')
+
+print("Movies by decade (catalog, unique titles):")
+print(movies['ReleaseDecade'].value_counts().sort_index())
