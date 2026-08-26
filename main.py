@@ -246,3 +246,9 @@ movie_group.sort_values('AvgRating', ascending=False).head(10).reset_index(drop=
 MIN_RATINGS = 100
 print(f'Top 10 movies by AVERAGE rating, requiring >= {MIN_RATINGS} ratings (far more trustworthy):')
 movie_group[movie_group['NumRatings'] >= MIN_RATINGS].sort_values('AvgRating', ascending=False).head(10).reset_index(drop=True).round(2)
+
+fig = px.scatter(movie_group, x='NumRatings', y='AvgRating', hover_name='Title', opacity=0.4, title='Average rating vs Number of ratings, per movie', labels={'NumRatings': '# rating (popularity)', 'AvgRating': 'average rating (quality)'})
+fig.add_hline(y=movie_group['AvgRating'].mean(), line_dash='dot', line_color='gray', annotation_text='overall average rating', annotation_position='bottom right')
+fig.add_vline(x=movie_group['NumRatings'].mean(), line_dash='dot', line_color='orange', annotation_text='avg number of ratings', annotation_position='bottom right')
+fig.update_layout(xaxis_title='# ratings', yaxis_title='average rating')
+fig.show(renderer='colab')
