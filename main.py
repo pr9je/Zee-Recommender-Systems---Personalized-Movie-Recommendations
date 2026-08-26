@@ -239,3 +239,6 @@ movie_group = df.groupby('Title').agg(AvgRating=('Rating', 'mean'), NumRatings=(
 
 print("Top 10 movies by NUMBER of Ratings (most-watched):")
 movie_group.sort_values('NumRatings', ascending=False).head(10).reset_index(drop=True).round(2)
+
+print("Top 10 movies by AVERAGE rating, with NO minimum-ratings floow-note how few ratings back most of these up: ")
+movie_group.sort_values('AvgRating', ascending=False).head(10).reset_index(drop=True).round(2)
