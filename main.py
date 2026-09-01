@@ -252,3 +252,18 @@ fig.add_hline(y=movie_group['AvgRating'].mean(), line_dash='dot', line_color='gr
 fig.add_vline(x=movie_group['NumRatings'].mean(), line_dash='dot', line_color='orange', annotation_text='avg number of ratings', annotation_position='bottom right')
 fig.update_layout(xaxis_title='# ratings', yaxis_title='average rating')
 fig.show(renderer='colab')
+
+# Age x genre cross-analysis
+genre_df = df[['AgeGroup','Genres']].copy()
+genre_df['Genres'] = genre_df['Genres'].str.split('|')
+genre_df = genre_df.explode('Genres').reset_index(drop=True)
+
+top_genres = genre_df['Genres'].value_counts().head(6).index
+sub = genre_df[genre_df['Genres'].isin(top_genres)]
+
+age_genre_ct = pd.crosstab(sub['AgeGroup'], sub['Genres'], normalize='index').reindex(age_order)
+
+fig = px.imshow(age_genre_ct, text_auto='.1%', color_continuous_scale='YlGnBu', aspect='auto', labels=dict(color='Share of age group\s rating'),
+                title='Genre preference by age group (row-normalized)')
+fig.update_layout(xaxis_title='Genre', yaxis_title='Age Group')
+fig.show(renderer='colab')
