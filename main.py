@@ -324,3 +324,8 @@ df[['Title', 'ReleaseYear', 'ReleaseDecade', 'Zip-code', 'State_US_Region', 'Rat
 genre_dummies = df['Genres'].str.get_dummies(sep='|')
 print('Genre one-hot matrix:', genre_dummies.shape)
 genre_dummies.head(3)
+
+pivot = df.pivot_table(index='UserID', columns='MovieID', values='Rating')
+pivot_filled = pivot.fillna(0)
+print("Use-item pivot table (user x movies): ",pivot_filled.shape)
+print(f'Confirmed sparsityL {(pivot.isna().sum().sum() / pivot.size):.2%} missing')
