@@ -295,3 +295,16 @@ df['isHoliday'] = df['RatingDatetime'].dt.normalize().isin(us_holidays)
 
 print(f'Rating span: {df['RatingDatetime'].min().date()} to {df['RatingDatetime'].max().date()}')
 print(f'Weekend ratings: {df['isWeekend'].mean():.1%} | Holiday ratings: {df['isHoliday'].mean():.1%}')
+
+# Release Year / Decade, extrated from the movie title(titles follow "Title (YYYY)")
+df['ReleaseYear'] = df['Title'].str.extract(r'\((\d{4})\)$').astype(float)
+df['ReleaseDecade'] = (df['ReleaseYear'] // 10 * 10).astype('Int64')
+
+
+# Approximate US region from the leading ZIP digit (standard USPS leading-digit grouping). This is a coarse "State_US"-style geography feature — not exact state-level, since that would require an external ZIP->state lookup table, but useful for regional exploration.
+zip_region_map = {'0': 'Northeast', '1': 'Northeast', '2': 'Mid-Atlantic South', '3': 'Southeast',
+                   '4': 'Midwest (East)', '5': 'Midwest (West)', '6': 'Central', '7': 'South Central',
+                   '8': 'Mountain', '9': 'Pacific'}
+df['State_US_Region'] = df['Zip-code'].astype(str).str.strip().str[0].map(zip_region_map)
+
+df[['Title', 'ReleaseYear', 'ReleaseDecade', 'Zip-code', 'State_US_Region', 'RatingDayOfWeek', 'isWeekend', 'isHoliday']].head()
