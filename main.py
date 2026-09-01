@@ -318,3 +318,9 @@ NumRatingUser=('Rating','count')).reset_index()
 df = df.merge(movie_stats, on='MovieID').merge(user_stats, on='UserID')
 
 df[['Title', 'ReleaseYear', 'ReleaseDecade', 'Zip-code', 'State_US_Region', 'RatingDayOfWeek', 'isWeekend', 'isHoliday']].head()
+
+# Encoding Categorical data
+# Genres: Multi-label one-hot endocing (a movie can belong to several genres at once)
+genre_dummies = df['Genres'].str.get_dummies(sep='|')
+print('Genre one-hot matrix:', genre_dummies.shape)
+genre_dummies.head(3)
