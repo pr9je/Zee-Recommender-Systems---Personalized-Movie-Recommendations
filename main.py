@@ -277,3 +277,21 @@ avg_rating_by_genre =(
 )
 print("Average rating by genre:")
 print(avg_rating_by_genre.round(3))
+
+# Data Preprocessing & Feature Engineering 
+
+# Cleaning and formatting 
+# Timestamp -> clander featues
+df['RatingDatetime'] = pd.to_datetime(df['Timestamp'], unit='s')
+df['RatingYear'] = df['RatingDatetime'].dt.year
+df['RatingMonth'] = df['RatingDatetime'].dt.month
+df['RatingDay'] = df['RatingDatetime'].dt.day
+df['RatingDayOfWeek'] = df['RatingDatetime'].dt.day_name()
+df['isWeekend'] = df['RatingDatetime'].dt.dayofweek.isin([5,6])
+
+cal = USFederalHolidayCalendar()
+us_holidays = cal.holidays(start = df['RatingDatetime'].min(), end = df['RatingDatetime'].max())
+df['isHoliday'] = df['RatingDatetime'].dt.normalize().isin(us_holidays)
+
+print(f'Rating span: {df['RatingDatetime'].min().date()} to {df['RatingDatetime'].max().date()}')
+print(f'Weekend ratings: {df['isWeekend'].mean():.1%} | Holiday ratings: {df['isHoliday'].mean():.1%}')
