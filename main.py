@@ -267,3 +267,13 @@ fig = px.imshow(age_genre_ct, text_auto='.1%', color_continuous_scale='YlGnBu', 
                 title='Genre preference by age group (row-normalized)')
 fig.update_layout(xaxis_title='Genre', yaxis_title='Age Group')
 fig.show(renderer='colab')
+
+avg_rating_by_genre =(
+    df.assign(Genres=df['Genres'].str.split('|'))
+    .explode("Genres")
+    .groupby('Genres')['Rating']
+    .mean()
+    .sort_values(ascending=False)
+)
+print("Average rating by genre:")
+print(avg_rating_by_genre.round(3))
