@@ -308,3 +308,13 @@ zip_region_map = {'0': 'Northeast', '1': 'Northeast', '2': 'Mid-Atlantic South',
 df['State_US_Region'] = df['Zip-code'].astype(str).str.strip().str[0].map(zip_region_map)
 
 df[['Title', 'ReleaseYear', 'ReleaseDecade', 'Zip-code', 'State_US_Region', 'RatingDayOfWeek', 'isWeekend', 'isHoliday']].head()
+
+# Derived aggregate features
+movie_stats = df.groupby('MovieID').agg(AvgRatingMoive=('Rating','mean'), NumRatingMovie=('Rating','count')).reset_index()
+
+user_stats = df.groupby('UserID').agg(AvgRatingUser=('Rating','mean'),
+NumRatingUser=('Rating','count')).reset_index()
+
+df = df.merge(movie_stats, on='MovieID').merge(user_stats, on='UserID')
+
+df[['Title', 'ReleaseYear', 'ReleaseDecade', 'Zip-code', 'State_US_Region', 'RatingDayOfWeek', 'isWeekend', 'isHoliday']].head()
