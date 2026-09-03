@@ -368,3 +368,14 @@ user_sim_df = pd.DataFrame(user_sim, index=pivot_filled.index, columns=pivot_fil
 print("User-user similarity matrix: ", user_sim_df.shape)
 print("Example: User-user similarity for the first 5 users")
 user_sim_df.iloc[:5,:5].round(3)
+
+def recommend_cosine(movie_name, n=5, min_ratings=50):
+  """Top-n movies most similar to 'movie-name' by Cosine Similarity of rating vectors."""
+  sims = item_sim_df[movie_name].drop(index=movie_name)
+  out = pd.DataFrame({'Title': sims.index, 'CosineSimilarity': sims.values})
+  out = out.merge(movie_rating_counts.rename('NumRatings'), left_on='Title', right_index=True)
+  out = out[out['NumRatings'] >= min_ratings]
+  return out.sort_values('CosineSimilarity', ascending=False).head(n).reset_index(drop=True)
+
+cosine_liarliar = recommend_cosine('Liar Liar (1997)', n=5)
+cosine_liarliar
