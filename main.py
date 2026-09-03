@@ -329,3 +329,24 @@ pivot = df.pivot_table(index='UserID', columns='MovieID', values='Rating')
 pivot_filled = pivot.fillna(0)
 print("Use-item pivot table (user x movies): ",pivot_filled.shape)
 print(f'Confirmed sparsityL {(pivot.isna().sum().sum() / pivot.size):.2%} missing')
+
+# Model 1 Item-item Collaborative Filtering (Pearson Correlation)
+pivot = df.pivot_table(index='UserID', columns='Title', values='Rating')
+pivot_filled = pivot.fillna(0)
+
+movie_rating_counts = df.groupby('Title').size()
+
+def recommend_pearson(movie_name, n=5, min_ratings=50):
+  """Top-n movies most correlated with 'movie-name' by Pearson Correlation of rating vectors."""
+  if movie_name not in pivot_filled.columns:
+    close = [c for c in pivot_filled.columns if movie_name.lower() in c.lower()]
+    raise ValueError(f"'{movie_name}' not found. Close matches: {close[:5]}")
+  target = pivot_filled[movie_name]
+  corrs = pivot_filled.corrwith(target)
+  out = pd.DataFrame({'Title': corrs.index, 'PearsonCorrelation': corrs.values})
+  out = out.merge(movie_rating_counts.rename('NumRatings'), left_on='Title', right_index=True)
+  out = out[(out['Title'] != movie_name) & (out['NumRatings'] >= min_ratings)]
+  return out.sort_values('PearsonCorrelation', ascending=False).head(n).reset_index(drop=True)
+
+pearson_liarliar = recommend_pearson('Liar Liar (1997)', n=5)
+pearson_liarliar
