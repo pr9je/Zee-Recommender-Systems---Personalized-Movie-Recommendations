@@ -355,3 +355,10 @@ pearson_liarliar
 for title in ['Star Wars: Episode IV - A New Hope (1977)', 'Toy Story (1995)']:
   print(f"\nTop 5 similar to: {title}")
   print(recommend_pearson(title, n=5).to_string(index=False))
+
+# Model 2 Collaborative Filtering with Cosine Similarity
+item_sim = cosine_similarity(pivot_filled.T.values)
+item_sim_df = pd.DataFrame(item_sim, index=pivot_filled.columns, columns=pivot_filled.columns)
+print("Item-item similarity matrix: ", item_sim_df.shape)
+print("Example: item-item similarity for thei first 5 movies")
+item_sim_df.iloc[:5,:5].round(3)
