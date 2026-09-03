@@ -362,3 +362,9 @@ item_sim_df = pd.DataFrame(item_sim, index=pivot_filled.columns, columns=pivot_f
 print("Item-item similarity matrix: ", item_sim_df.shape)
 print("Example: item-item similarity for thei first 5 movies")
 item_sim_df.iloc[:5,:5].round(3)
+
+user_sim = cosine_similarity(pivot_filled.values)
+user_sim_df = pd.DataFrame(user_sim, index=pivot_filled.index, columns=pivot_filled.index)
+print("User-user similarity matrix: ", user_sim_df.shape)
+print("Example: User-user similarity for the first 5 users")
+user_sim_df.iloc[:5,:5].round(3)
