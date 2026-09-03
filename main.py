@@ -350,3 +350,8 @@ def recommend_pearson(movie_name, n=5, min_ratings=50):
 
 pearson_liarliar = recommend_pearson('Liar Liar (1997)', n=5)
 pearson_liarliar
+
+# A couple more examples to sanity check the recommdender across genres.
+for title in ['Star Wars: Episode IV - A New Hope (1977)', 'Toy Story (1995)']:
+  print(f"\nTop 5 similar to: {title}")
+  print(recommend_pearson(title, n=5).to_string(index=False))
