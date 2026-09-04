@@ -379,3 +379,12 @@ def recommend_cosine(movie_name, n=5, min_ratings=50):
 
 cosine_liarliar = recommend_cosine('Liar Liar (1997)', n=5)
 cosine_liarliar
+
+# Nearest Neighbors on CSR (sparse) matrix.
+movie_to_idx = {title: i for i, title in enumerate(pivot_filled.columns)}
+idx_to_movie = {i: title for title, i in movie_to_idx.items()}
+
+item_user_csr = csr_matrix(pivot_filled.T.values)
+print(f"CSR matrix: {item_user_csr.shape}, {item_user_csr.nnz:,} stored (non-zero) entries "
+      f"out of {item_user_csr.shape[0]*item_user_csr.shape[1]:,} possible "
+      f"({item_user_csr.nnz / (item_user_csr.shape[0]*item_user_csr.shape[1]):.2%} dense)")
