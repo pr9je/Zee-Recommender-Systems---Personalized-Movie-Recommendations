@@ -388,3 +388,6 @@ item_user_csr = csr_matrix(pivot_filled.T.values)
 print(f"CSR matrix: {item_user_csr.shape}, {item_user_csr.nnz:,} stored (non-zero) entries "
       f"out of {item_user_csr.shape[0]*item_user_csr.shape[1]:,} possible "
       f"({item_user_csr.nnz / (item_user_csr.shape[0]*item_user_csr.shape[1]):.2%} dense)")
+
+knn_model = NearestNeighbors(metric='cosine', algorithm='brute')
+knn_model.fit(item_user_csr)
