@@ -397,3 +397,6 @@ def recommend_knn(movie_name, n=5):
   distances, indices = knn_model.kneighbors(item_user_csr[idx], n_neighbors= n+1)
   recs = [(idx_to_movie[i], 1 - d) for d, i in zip(distances.flatten(), indices.flatten()) if i != idx]
   return pd.DataFrame(recs, columns=['Title', 'CosineSimilarity']).head(n)
+
+knn_liarliar = recommend_knn('Liar Liar (1997)', n=5)
+knn_liarliar
