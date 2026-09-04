@@ -391,3 +391,9 @@ print(f"CSR matrix: {item_user_csr.shape}, {item_user_csr.nnz:,} stored (non-zer
 
 knn_model = NearestNeighbors(metric='cosine', algorithm='brute')
 knn_model.fit(item_user_csr)
+
+def recommend_knn(movie_name, n=5):
+  idx = movie_to_idx[movie_name]
+  distances, indices = knn_model.kneighbors(item_user_csr[idx], n_neighbors= n+1)
+  recs = [(idx_to_movie[i], 1 - d) for d, i in zip(distances.flatten(), indices.flatten()) if i != idx]
+  return pd.DataFrame(recs, columns=['Title', 'CosineSimilarity']).head(n)
