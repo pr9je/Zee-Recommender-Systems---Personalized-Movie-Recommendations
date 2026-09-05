@@ -400,3 +400,7 @@ def recommend_knn(movie_name, n=5):
 
 knn_liarliar = recommend_knn('Liar Liar (1997)', n=5)
 knn_liarliar
+
+# Worked examples: sparse-matrix representation
+example_dense = np.array([[1, 0], [3, 7]])
+example_csr = csr_matrix(example_dense)
