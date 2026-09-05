@@ -424,3 +424,7 @@ svd.fit(mf_trainset)
 predictions = svd.test(mf_testset)
 rmse = accuracy.rmse(predictions, verbose=False)
 mae = accuracy.mae(predictions, verbose=False)
+
+y_true = np.array([p.r_ui for p in predictions])
+y_pred = np.array([p.est for p in predictions])
+mape = np.mean(np.abs((y_true - y_pred) / y_true)) * 100
