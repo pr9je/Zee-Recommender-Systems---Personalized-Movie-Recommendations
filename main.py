@@ -420,3 +420,7 @@ mf_trainset, mf_testset = surprise_train_test_split(mf_data, test_size=0.2, rand
 
 svd = SVD(n_factors=4, random_state=RANDOM_STATE)
 svd.fit(mf_trainset)
+
+predictions = svd.test(mf_testset)
+rmse = accuracy.rmse(predictions, verbose=False)
+mae = accuracy.mae(predictions, verbose=False)
