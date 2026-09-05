@@ -410,3 +410,8 @@ print("  data (non-zero values, row-major order):", example_csr.data)
 print("  indices (column index of each value):   ", example_csr.indices)
 print("  indptr (start offset of each row):       ", example_csr.indptr)
 print("\n", example_csr)
+
+# Model 3 - Matrix Factorization (SVD)
+ratings_for_mf = df[['UserID', 'MovieID', 'Rating']].drop_duplicates(subset=['UserID', 'MovieID'])
+reader = Reader(rating_scale=(1,5))
+mf_data = Dataset.load_from_df(ratings_for_mf, reader)
