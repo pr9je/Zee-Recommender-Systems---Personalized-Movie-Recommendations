@@ -428,3 +428,8 @@ mae = accuracy.mae(predictions, verbose=False)
 y_true = np.array([p.r_ui for p in predictions])
 y_pred = np.array([p.est for p in predictions])
 mape = np.mean(np.abs((y_true - y_pred) / y_true)) * 100
+
+print(f"Matrix Factorization (d=4) — held-out test set of {len(predictions):,} ratings")
+print(f"  RMSE: {rmse:.4f}  (average star-rating error, penalizing large misses more)")
+print(f"  MAE:  {mae:.4f}  (average absolute star-rating error)")
+print(f"  MAPE: {mape:.2f}%  (average error as a % of the true rating)")
