@@ -404,3 +404,6 @@ knn_liarliar
 # Worked examples: sparse-matrix representation
 example_dense = np.array([[1, 0], [3, 7]])
 example_csr = csr_matrix(example_dense)
+print("Dense matrix:\n", example_dense)
+print("\nCSR components:")
+print("  data (non-zero values, row-major order):", example_csr.data)
