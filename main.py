@@ -415,3 +415,8 @@ print("\n", example_csr)
 ratings_for_mf = df[['UserID', 'MovieID', 'Rating']].drop_duplicates(subset=['UserID', 'MovieID'])
 reader = Reader(rating_scale=(1,5))
 mf_data = Dataset.load_from_df(ratings_for_mf, reader)
+
+mf_trainset, mf_testset = surprise_train_test_split(mf_data, test_size=0.2, random_state=RANDOM_STATE)
+
+svd = SVD(n_factors=4, random_state=RANDOM_STATE)
+svd.fit(mf_trainset)
