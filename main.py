@@ -447,3 +447,9 @@ inner_to_title = {
 titles_ordered = [inner_to_title[i] for i in range(item_factors.shape[0])]
 
 item_embedding_sim = pd.DataFrame(cosine_similarity(item_factors), index=titles_ordered, columns=titles_ordered)
+
+def recommend_embedding(movie_name, n=5):
+    sims = item_embedding_sim[movie_name]
+    if isinstance(sims, pd.DataFrame):  # guard in the rare case of duplicate titles
+        sims = sims.iloc[:, 0]
+    return sims.drop(index=movie_name).sort_values(ascending=False).head(n)
