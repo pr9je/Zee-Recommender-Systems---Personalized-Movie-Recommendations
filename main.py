@@ -440,3 +440,8 @@ item_factors = svd.qi  # shape: (n_items_in_trainset, 4)
 
 movieid_to_title = df.drop_duplicates('MovieID').set_index('MovieID')['Title'].to_dict()
 
+inner_to_title = {
+    mf_trainset.to_inner_iid(raw_iid): movieid_to_title.get(raw_iid, f"MovieID {raw_iid}")
+    for raw_iid in mf_trainset._raw2inner_id_items
+}
+titles_ordered = [inner_to_title[i] for i in range(item_factors.shape[0])]
