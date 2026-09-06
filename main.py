@@ -433,3 +433,10 @@ print(f"Matrix Factorization (d=4) — held-out test set of {len(predictions):,}
 print(f"  RMSE: {rmse:.4f}  (average star-rating error, penalizing large misses more)")
 print(f"  MAE:  {mae:.4f}  (average absolute star-rating error)")
 print(f"  MAPE: {mape:.2f}%  (average error as a % of the true rating)")
+
+## Embedding-Based Similarity & Visualization
+### Item-item similarity from d=4 embeddings
+item_factors = svd.qi  # shape: (n_items_in_trainset, 4)
+
+movieid_to_title = df.drop_duplicates('MovieID').set_index('MovieID')['Title'].to_dict()
+
