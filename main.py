@@ -453,3 +453,6 @@ def recommend_embedding(movie_name, n=5):
     if isinstance(sims, pd.DataFrame):  # guard in the rare case of duplicate titles
         sims = sims.iloc[:, 0]
     return sims.drop(index=movie_name).sort_values(ascending=False).head(n)
+
+embedding_liarliar = recommend_embedding('Liar Liar (1997)', n=5)
+embedding_liarliar
