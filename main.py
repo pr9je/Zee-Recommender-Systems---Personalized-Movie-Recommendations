@@ -445,3 +445,5 @@ inner_to_title = {
     for raw_iid in mf_trainset._raw2inner_id_items
 }
 titles_ordered = [inner_to_title[i] for i in range(item_factors.shape[0])]
+
+item_embedding_sim = pd.DataFrame(cosine_similarity(item_factors), index=titles_ordered, columns=titles_ordered)
