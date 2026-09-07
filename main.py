@@ -473,3 +473,6 @@ svd_2d = SVD(n_factors=2, random_state=RANDOM_STATE)
 full_trainset = mf_data.build_full_trainset()
 svd_2d.fit(full_trainset)
 
+inner_to_movieid_2d = {v: k for k, v in full_trainset._raw2inner_id_items.items()}
+movie_ids_2d = [inner_to_movieid_2d[i] for i in range(svd_2d.qi.shape[0])]
+genre_map = df.drop_duplicates('MovieID').set_index('MovieID')['Genres'].to_dict()
