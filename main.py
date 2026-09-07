@@ -460,3 +460,10 @@ embedding_liarliar
 # User-user similarity form embeddings.
 user_factors = svd.pu  # shape: (n_users_in_trainset, 4)
 userid_to_inner = {raw: mf_trainset.to_inner_uid(raw) for raw in mf_trainset._raw2inner_id_users}
+
+def most_similar_users(user_id, n=5):
+    inner_id = userid_to_inner[user_id]
+    sims = cosine_similarity(user_factors[inner_id].reshape(1, -1), user_factors).flatten()
+    inner_to_raw = {v: k for k, v in userid_to_inner.items()}
+    out = pd.DataFrame({'UserID': [inner_to_raw[i] for i in range(len(sims))], 'Similarity': sims})
+    return out[out['UserID'] != user_id].sort_values('Similarity', ascending=False).head(n)
