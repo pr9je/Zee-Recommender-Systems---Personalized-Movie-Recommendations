@@ -467,3 +467,9 @@ def most_similar_users(user_id, n=5):
     inner_to_raw = {v: k for k, v in userid_to_inner.items()}
     out = pd.DataFrame({'UserID': [inner_to_raw[i] for i in range(len(sims))], 'Similarity': sims})
     return out[out['UserID'] != user_id].sort_values('Similarity', ascending=False).head(n)
+
+# Bonus - d=2 embeddings, visualized
+svd_2d = SVD(n_factors=2, random_state=RANDOM_STATE)
+full_trainset = mf_data.build_full_trainset()
+svd_2d.fit(full_trainset)
+
