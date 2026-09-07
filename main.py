@@ -456,3 +456,7 @@ def recommend_embedding(movie_name, n=5):
 
 embedding_liarliar = recommend_embedding('Liar Liar (1997)', n=5)
 embedding_liarliar
+
+# User-user similarity form embeddings.
+user_factors = svd.pu  # shape: (n_users_in_trainset, 4)
+userid_to_inner = {raw: mf_trainset.to_inner_uid(raw) for raw in mf_trainset._raw2inner_id_users}
