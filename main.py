@@ -488,3 +488,10 @@ emb2d = pd.DataFrame({
 top_genres_plot = emb2d['PrimaryGenre'].value_counts().head(8).index
 
 plot_df = emb2d[emb2d['PrimaryGenre'].isin(top_genres_plot)]
+
+fig = px.scatter(plot_df, x='x', y='y', color='PrimaryGenre', hover_name='Title',
+                  opacity=0.55, title='d=2 SVD item embeddings, colored by primary genre '
+                                       '(hover a point to see the movie)')
+fig.update_traces(marker=dict(size=6, line=dict(width=0)))
+fig.update_layout(height=650, legend_title='Primary genre')
+fig.show(renderer='colab')
