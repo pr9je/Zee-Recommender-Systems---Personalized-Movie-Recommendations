@@ -484,3 +484,7 @@ emb2d = pd.DataFrame({
     'y': svd_2d.qi[:, 1],
     'PrimaryGenre': [genre_map.get(m, 'Unknown').split('|')[0] for m in movie_ids_2d],
 })
+
+top_genres_plot = emb2d['PrimaryGenre'].value_counts().head(8).index
+
+plot_df = emb2d[emb2d['PrimaryGenre'].isin(top_genres_plot)]
