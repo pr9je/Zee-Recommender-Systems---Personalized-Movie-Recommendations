@@ -505,3 +505,6 @@ new_user_ratings = {
     'Home Alone (1990)': 3,
     'Ace Ventura: Pet Detective (1994)': 4,
 }
+
+new_user_df = pd.DataFrame(list(new_user_ratings.items()), columns=['Title', 'Rating'])
+new_user_df
