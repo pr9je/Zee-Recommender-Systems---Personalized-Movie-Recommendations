@@ -495,3 +495,13 @@ fig = px.scatter(plot_df, x='x', y='y', color='PrimaryGenre', hover_name='Title'
 fig.update_traces(marker=dict(size=6, line=dict(width=0)))
 fig.update_layout(height=650, legend_title='Primary genre')
 fig.show(renderer='colab')
+
+# User-Based Collaborative Filtering
+# Step 1: a new user rates a handful of movies
+new_user_ratings = {
+    'Toy Story (1995)': 5,
+    "Bug's Life, A (1998)": 4,
+    'Liar Liar (1997)': 5,
+    'Home Alone (1990)': 3,
+    'Ace Ventura: Pet Detective (1994)': 4,
+}
