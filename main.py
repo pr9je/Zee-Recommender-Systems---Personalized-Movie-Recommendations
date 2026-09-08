@@ -508,3 +508,8 @@ new_user_ratings = {
 
 new_user_df = pd.DataFrame(list(new_user_ratings.items()), columns=['Title', 'Rating'])
 new_user_df
+
+# Step 2: find existing users who've also watched at least one of these movies, ranked by overlap
+watched_cols = pivot_filled[list(new_user_ratings.keys())]
+overlap_count = (watched_cols != 0).sum(axis=1)
+overlap_count = overlap_count[overlap_count > 0].sort_values(ascending=False)
