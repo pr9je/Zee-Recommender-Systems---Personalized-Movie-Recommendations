@@ -11,9 +11,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import plotly.io as pio
 pio.templates.default = 'plotly_white'
-# 'notebook' renderer embeds the chart library inline (once) so charts still render if this
-# notebook is exported to HTML/PDF, not only when opened live in Jupyter/Colab/VS Code.
-pio.renderers.default = 'notebook'
+
 
 from scipy.sparse import csr_matrix
 from sklearn.metrics.pairwise import cosine_similarity
