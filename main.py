@@ -517,3 +517,6 @@ overlap_count = overlap_count[overlap_count > 0].sort_values(ascending=False)
 # Step 3: take the top 100 by overlap, then score each by Pearson correlation with the new user
 # (over just the movies they have in common)
 top_100_by_overlap = overlap_count.head(100).index
+new_user_vec = pd.Series(new_user_ratings)
+
+similarity_scores = {}
