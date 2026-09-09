@@ -524,3 +524,6 @@ for uid in top_100_by_overlap:
     other_vec = pivot_filled.loc[uid, list(new_user_ratings.keys())]
     if other_vec.std() == 0 or new_user_vec.std() == 0:
         continue
+        corr = np.corrcoef(new_user_vec.values, other_vec.values)[0, 1]
+    if not np.isnan(corr):
+        similarity_scores[uid] = corr
