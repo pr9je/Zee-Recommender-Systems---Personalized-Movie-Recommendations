@@ -527,3 +527,6 @@ for uid in top_100_by_overlap:
         corr = np.corrcoef(new_user_vec.values, other_vec.values)[0, 1]
     if not np.isnan(corr):
         similarity_scores[uid] = corr
+
+# Step 4: top 10 most similar users
+top_10_similar_users = pd.Series(similarity_scores).sort_values(ascending=False).head(10)
