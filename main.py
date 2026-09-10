@@ -547,3 +547,6 @@ for uid, sim in top_10_similar_users.items():
     weighted_sum[rated_mask] += user_ratings[rated_mask] * sim
     weight_total[rated_mask] += abs(sim)
     support_count[rated_mask] += 1
+
+rec_scores = (weighted_sum / weight_total.replace(0, np.nan)).dropna()
+rec_scores = rec_scores.drop(index=[m for m in already_rated if m in rec_scores.index])
