@@ -531,3 +531,10 @@ for uid in top_100_by_overlap:
 # Step 4: top 10 most similar users
 top_10_similar_users = pd.Series(similarity_scores).sort_values(ascending=False).head(10)
 top_10_similar_users
+
+# Step 5: pull every movie these 10 similar users rated, weight each rating by that user's
+# similarity score, and average -> a similarity-weighted recommendation score per movie.
+already_rated = set(new_user_ratings.keys())
+weighted_sum = pd.Series(0.0, index=pivot_filled.columns)
+weight_total = pd.Series(0.0, index=pivot_filled.columns)
+support_count = pd.Series(0, index=pivot_filled.columns)
