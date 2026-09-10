@@ -538,3 +538,12 @@ already_rated = set(new_user_ratings.keys())
 weighted_sum = pd.Series(0.0, index=pivot_filled.columns)
 weight_total = pd.Series(0.0, index=pivot_filled.columns)
 support_count = pd.Series(0, index=pivot_filled.columns)
+
+for uid, sim in top_10_similar_users.items():
+    if sim <= 0:
+        continue
+    user_ratings = pivot_filled.loc[uid]
+    rated_mask = user_ratings != 0
+    weighted_sum[rated_mask] += user_ratings[rated_mask] * sim
+    weight_total[rated_mask] += abs(sim)
+    support_count[rated_mask] += 1
