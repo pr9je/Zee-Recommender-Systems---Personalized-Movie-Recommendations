@@ -550,3 +550,12 @@ for uid, sim in top_10_similar_users.items():
 
 rec_scores = (weighted_sum / weight_total.replace(0, np.nan)).dropna()
 rec_scores = rec_scores.drop(index=[m for m in already_rated if m in rec_scores.index])
+
+# Require agreement from at least 2 of the top-10 similar users, to avoid single-vote artifacts
+rec_scores_robust = rec_scores[rec_scores.index.map(lambda t: support_count.get(t, 0) >= 2)]
+
+print("Top 10 recommendations for the new user:")
+rec_scores_robust.sort_values(ascending=False).head(10)
+
+print("Final Recommendation — Top 10 movies for the new user (User-Based Pearson Correlation):")
+rec_scores_robust.sort_values(ascending=False).head(10)
