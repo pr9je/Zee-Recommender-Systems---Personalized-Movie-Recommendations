@@ -530,3 +530,4 @@ for uid in top_100_by_overlap:
 
 # Step 4: top 10 most similar users
 top_10_similar_users = pd.Series(similarity_scores).sort_values(ascending=False).head(10)
+top_10_similar_users
